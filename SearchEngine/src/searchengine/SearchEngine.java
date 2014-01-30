@@ -13,6 +13,9 @@ package searchengine;
 
 /**
  * @author Jon Davidson
+ * @author [          ]
+ * @author [          ]
+ * @author [          ]
  */
 public class SearchEngine {
 
