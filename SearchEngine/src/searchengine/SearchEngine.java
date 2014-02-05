@@ -13,7 +13,7 @@ package searchengine;
 
 /**
  * @author Jon Davidson
- * @author [          ]
+ * @author Chino Caliente
  * @author [          ]
  * @author [          ]
  */
