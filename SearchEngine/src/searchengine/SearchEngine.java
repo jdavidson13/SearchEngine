@@ -3,7 +3,7 @@
  * Team:            Super Friends
  * Authors:         Jon Davidson
  *                  Thanh J. Duong A.K.A. Chino Caliente
- *                  [          ]
+ *                  John McLain
  *                  [          ]
  *
  * Date Started:    January 29th, 2014
@@ -14,7 +14,7 @@ package searchengine;
 /**
  * @author Jon Davidson
  * @author Chino Caliente
- * @author [          ]
+ * @author John McLain
  * @author [          ]
  */
 public class SearchEngine {
