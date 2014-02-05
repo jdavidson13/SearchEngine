@@ -1,6 +1,6 @@
 /*
  * Project:         Java II (COP 2805) Search Engine
- *
+ *Team: Super Friends
  * Authors:         Jon Davidson
  * Author:          Thanh J. Duong A.K.A. Chino Caliente
  *                  [          ]
