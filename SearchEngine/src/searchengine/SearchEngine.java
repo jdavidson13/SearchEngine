@@ -2,7 +2,7 @@
  * Project:         Java II (COP 2805) Search Engine
  *
  * Authors:         Jon Davidson
- *                  [          ]
+ * Author:          Thanh J. Duong A.K.A. Chino Caliente
  *                  [          ]
  *                  [          ]
  *
