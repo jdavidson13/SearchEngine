@@ -10,7 +10,7 @@
  */
 
 package searchengine;
-
+package java.util.awt.*;
 /**
  * @author Jon Davidson
  * @author Chino Caliente
@@ -23,7 +23,7 @@ public class SearchEngine {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO: code application logic here
+        
     }
 
 }
