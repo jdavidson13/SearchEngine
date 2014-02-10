@@ -10,7 +10,8 @@
  */
 
 package searchengine;
-package java.util.awt.*;
+
+import java.awt.*;
 /**
  * @author Jon Davidson
  * @author Chino Caliente
