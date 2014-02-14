@@ -4,7 +4,7 @@
  * Authors:         Jon Davidson
  *                  Thanh J. Duong A.K.A. Chino Caliente
  *                  John McLain
- *                  [          ]
+ *                  Shaz Hosein        
  *
  * Date Started:    January 29th, 2014
  */
@@ -16,7 +16,7 @@ import java.awt.*;
  * @author Jon Davidson
  * @author Chino Caliente
  * @author John McLain
- * @author [          ]
+ * @author Shaz Hosein       ]
  */
 public class SearchEngine {
 
