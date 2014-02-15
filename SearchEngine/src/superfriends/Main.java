@@ -43,8 +43,6 @@ public class Main {
         frame.setLayout(new BorderLayout());
         Border outline = BorderFactory.createLineBorder(Color.black);
 
- 
-
         Location[][] array = null;
         JPanel centerPanel = new JPanel();
         centerPanel.setPreferredSize(new Dimension(700, 400));
@@ -69,8 +67,6 @@ public class Main {
         northPanel.add(jB2);
         northPanel.add(jB1);
         
-        
-        
         JPanel bottomPanel = new JPanel();
         bottomPanel.setPreferredSize(new Dimension(700, 30));
         bottomPanel.setBackground(Color.GREEN);
@@ -80,19 +76,16 @@ public class Main {
         JButton main = new JButton("Maintenance");
         bottomPanel.add(main, BorderLayout.WEST);
         bottomPanel.add(about, BorderLayout.EAST);
-        
-
+    
         frame.add(northPanel, BorderLayout.NORTH);
-//        frame.add(leftPanel, BorderLayout.WEST);
         frame.add(centerPanel, BorderLayout.CENTER);
-//        frame.add(buttonPanel, BorderLayout.EAST);
         frame.add(bottomPanel, BorderLayout.SOUTH);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        System.out.println("Size of centerpane" + centerPanel.getWidth() + "x" + centerPanel.getHeight());
+        
     }     
      
     public static void main(String[] args) {
