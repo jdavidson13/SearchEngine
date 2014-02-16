@@ -93,7 +93,7 @@ public class Main {
 
             @Override
             public void run() {
-                new Example().createPlayground();
+                new Main().createPlayground();
             }
         });
     }
