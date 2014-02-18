@@ -11,9 +11,16 @@
 
 package superfriends;
 
-import java.awt.*;
+import java.awt.Container; 
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 /**
  * @author Jon Davidson
@@ -27,156 +34,96 @@ public class Main {
      * @param args the command line arguments
      */
     
-   public Main() {
-	
-		JFrame f= new JFrame("Search Engine");
-	
-		f.setSize(new Dimension(700, 650));
-		
-		f.setLocationRelativeTo(null);
-		
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		f.setLayout(new BorderLayout());
-		
-		//Top panel
-		
-		JPanel top = new JPanel();
-		
-		top.setLayout(new BorderLayout());
-		
-		top.setBackground(Color.green);
-		
-		top.setPreferredSize(new Dimension(700, 200));
-		
-		//SubPanel top
-		JPanel tP = new JPanel();
-		
-		tP.setLayout(new BorderLayout());
-		
-		tP.setPreferredSize(new Dimension(550, 50));
-		
-		JLabel search = new JLabel("Search Engine");
-		
-		search.setFont(new Font("Serif", Font.BOLD, 18));
-		
-		tP.add(search, BorderLayout.NORTH);
-		
-		top.add(tP, BorderLayout.NORTH);
-		
-		//SubPanel for Search Bar
-		JPanel tPanel = new JPanel();
-		
-		tPanel.setLayout(new BorderLayout());
-		
-		JTextField sInput = new JTextField("Enter Text");
-		
-		sInput.setPreferredSize(new Dimension(40, 40));
-		
-		tPanel.add(sInput, BorderLayout.CENTER);
-		
-		top.add(tPanel, BorderLayout.CENTER);
-		
-		//Sub panel for radioButtons
-		JPanel radioPanel = new JPanel (new FlowLayout (FlowLayout.CENTER));
-
-        JRadioButton button1 = new JRadioButton ("Button 1");
-        JRadioButton button2 = new JRadioButton ("Button 2");
-        JRadioButton button3 = new JRadioButton ("Button 3");
-
-        ButtonGroup group = new ButtonGroup ();
-        group.add (button1);
-        group.add (button2);
-		
-        radioPanel.add (button1);
-        radioPanel.add (button2);
-        radioPanel.add (button3);
+   public static void addComponentsToPane(Container pane) {
+        pane.setLayout(null);
+ 
+        JRadioButton rB1 = new JRadioButton("All Search Terms");
+        JRadioButton rB2 = new JRadioButton("Any of the Terms");
+        JRadioButton rB3 = new JRadioButton("Exact Phrase");
+ 
         
-        radioPanel.setPreferredSize(new Dimension(100, 50));
+        JButton b1 = new JButton("About");
+        JButton b2 = new JButton("Maintenance");
+        JButton b3 = new JButton("Search");
         
-        top.add (radioPanel, BorderLayout.SOUTH);
+        JLabel jlM = new JLabel("Matching Files:");
+        JLabel jL = new JLabel("Search Engine");
+        jL.setFont(new Font("Courier New", Font.BOLD, 14));
+        JLabel jLS = new JLabel("Search Terms: ");
         
-        //Right sub Panel
-        JPanel rP = new JPanel();
+        JTextField jF = new JTextField("Enter Text");
+        JTextField jFR = new JTextField("[RESULTS]");
         
-        JButton s = new JButton("Search");
+        pane.add(b1);
+        pane.add(b2);
+        pane.add(b3);
+        pane.add(jlM);
+        pane.add(jLS);
+        pane.add(jL);
+        pane.add(jF);
+        pane.add(jFR);
+        pane.add(rB1);
+        pane.add(rB2);
+        pane.add(rB3);
+ 
+        Insets insets = pane.getInsets();
         
-        rP.setBackground(Color.black);
+        Dimension size = rB1.getPreferredSize();
         
-        rP.setPreferredSize(new Dimension(300, 300));
+        jL.setBounds(250 + insets.left, 5 + insets.top, size.width, size.height);
         
-        rP.add(s);
+        jLS.setBounds(125 + insets.left, 45 + insets.top, size.width, size.height);
         
-        top.add(rP, BorderLayout.EAST);
+        jlM.setBounds(55 + insets.left, 145 + insets.top, size.width, size.height);
         
-        //Left SubPanel
-        JPanel lP = new JPanel();
+        jF.setBounds(225 + insets.left, 45 + insets.top, size.width + 100, size.height);
+       
+        jFR.setBounds(65 + insets.left, 175 + insets.top, size.width + 400, size.height + 300);
         
-        lP.setBackground(Color.yellow);
+        //JBUTTONS
+       
+        b1.setBounds(525 + insets.left, 550 + insets.top, size.width, size.height);
+        b2.setBounds(65 + insets.left, 550 + insets.top, size.width, size.height);
+        b3.setBounds(500 + insets.left, 45 + insets.top, size.width, size.height);
         
-        lP.setPreferredSize(new Dimension (50, 50));
+        // radio buttons
         
-        JLabel s2 = new JLabel("Search Engine");
-		
-		s2.setFont(new Font("Serif", Font.PLAIN, 14));
+        rB1.setBounds(125 + insets.left, 70 + insets.top, size.width, size.height);
+                
+        rB2.setBounds(250 + insets.left, 70 + insets.top, size.width, size.height);
         
-		lP.add(s2);
-		
-		top.add(lP, BorderLayout.WEST);
+        rB3.setBounds(375 + insets.left, 70 + insets.top, size.width, size.height);
         
-		//Center Panel
-		
-		JPanel center = new JPanel();
-		
-		JTextField input = new JTextField("Results", 50);
-		
-		input.setPreferredSize(new Dimension (700, 500));
-		
-		center.add(input);
-		
-		//Bottom Panel
-			
-		JPanel bottom = new JPanel();
-		
-		bottom.setLayout(new FlowLayout());
-		
-		JButton main = new JButton("Maintenance");
-		
-		JButton about = new JButton("About");
-		
-		bottom.setBackground(Color.red);
-		
-		bottom.add(main);
-		
-		bottom.add(about);
-		
-		//Add Panels
-		
-		f.add(center, BorderLayout.CENTER);
-		
-		f.add(top, BorderLayout.NORTH);
-		
-		f.add(bottom, BorderLayout.SOUTH);
-		
-		f.pack();
-		
-		f.setVisible(true);
-		
-	}
-	
-	public static void main(String[] args) {
-				
-		
-		
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override    
+        
+        
+    }
+ 
+    /**
+     * Create the GUI and show it.
+     */
+    private static void createAndInvokeGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame("Search Engine");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ 
+        //Set up the content pane.
+        addComponentsToPane(frame.getContentPane());
+ 
+        //Size and display the window.
+        Insets insets = frame.getInsets();
+        frame.setSize(700, 650);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+ 
+    public static void main(String[] args) {
+        //Schedule a job for the event-dispatching thread:
+        //creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-            
-            	Main form = new Main();
+                createAndInvokeGUI();
             }
         });
-
-	}
+    }
 
 }
