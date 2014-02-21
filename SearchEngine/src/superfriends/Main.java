@@ -93,8 +93,8 @@ public class Main {
         jL.setBounds(250 + insets.left, 5 + insets.top, size.width, size.height);
         jLS.setBounds(125 + insets.left, 45 + insets.top, size.width, size.height);
         jlM.setBounds(55 + insets.left, 145 + insets.top, size.width, size.height);
-        jF.setBounds(225 + insets.left, 45 + insets.top, size.width + 100, size.height);
-        jFR.setBounds(65 + insets.left, 175 + insets.top, size.width + 400, size.height + 300);
+        jF.setBounds(225 + insets.left, 45 + insets.top, size.width, size.height);
+        jFR.setBounds(65 + insets.left, 175 + insets.top, size.width, size.height);
         
         // buttons
         b1.setBounds(525 + insets.left, 550 + insets.top, size.width, size.height);
