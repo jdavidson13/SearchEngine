@@ -19,7 +19,7 @@ import javax.swing.*;
  * @author John McLain
  * @author Shaz Hosein
  */
-public class Main extends javax.swing.JFrame {
+public class Main extends JFrame {
 
     /**
      * Creates new form NewJFrame
@@ -106,6 +106,11 @@ public class Main extends javax.swing.JFrame {
 
         jButtonMaintenance.setFont(jButtonMaintenance.getFont());
         jButtonMaintenance.setText("Choose Files to Search");
+        jButtonMaintenance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMaintenanceActionPerformed(evt);
+            }
+        });
 
         jButtonClose.setFont(jButtonClose.getFont());
         jButtonClose.setText("Close");
@@ -178,8 +183,14 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
+        // Close the program
         System.exit(0);
     }//GEN-LAST:event_jButtonCloseActionPerformed
+
+    private void jButtonMaintenanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMaintenanceActionPerformed
+        // Open the maintenance window
+        new Maintenance().setVisible(true);
+    }//GEN-LAST:event_jButtonMaintenanceActionPerformed
 
     /**
      * @param args the command line arguments
