@@ -25,7 +25,7 @@ import java.awt.event.*;
 public class Maintenance extends JFrame implements ActionListener{
  
 	/* Initialize the Maintenance window components and their properties. */
-	public static void addComponentsToPane(Container pane) {
+	private static void addComponentsToPane(Container pane) {
  
 	    pane.setLayout(new GridBagLayout());
 	    GridBagConstraints c = new GridBagConstraints();
