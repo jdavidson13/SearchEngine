@@ -46,7 +46,7 @@ public class Main extends javax.swing.JFrame {
         jRadioButtonExact = new javax.swing.JRadioButton();
         jRadioButtonAll = new javax.swing.JRadioButton();
         jPanelResults = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneResults = new javax.swing.JScrollPane();
         jTextAreaResults = new javax.swing.JTextArea();
         jButtonMaintenance = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
@@ -85,7 +85,7 @@ public class Main extends javax.swing.JFrame {
         jTextAreaResults.setFont(jTextAreaResults.getFont());
         jTextAreaResults.setRows(5);
         jTextAreaResults.setText("C:\\SearchResults\\WillAppear\\RightHere.txt");
-        jScrollPane1.setViewportView(jTextAreaResults);
+        jScrollPaneResults.setViewportView(jTextAreaResults);
 
         javax.swing.GroupLayout jPanelResultsLayout = new javax.swing.GroupLayout(jPanelResults);
         jPanelResults.setLayout(jPanelResultsLayout);
@@ -93,14 +93,14 @@ public class Main extends javax.swing.JFrame {
             jPanelResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelResultsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPaneResults)
                 .addContainerGap())
         );
         jPanelResultsLayout.setVerticalGroup(
             jPanelResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelResultsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addComponent(jScrollPaneResults, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -203,7 +203,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButtonAll;
     private javax.swing.JRadioButton jRadioButtonAny;
     private javax.swing.JRadioButton jRadioButtonExact;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPaneResults;
     private javax.swing.JTextArea jTextAreaResults;
     private javax.swing.JTextField jTextFieldSearchTerms;
     // End of variables declaration//GEN-END:variables
