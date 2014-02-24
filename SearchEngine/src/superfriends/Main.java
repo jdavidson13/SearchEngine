@@ -53,7 +53,7 @@ public class Main extends javax.swing.JFrame {
         jButtonAbout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Superfriends Search");
+        setTitle("Superfriends Search Engine");
 
         jLabelTitle.setFont(jLabelTitle.getFont().deriveFont(jLabelTitle.getFont().getStyle() | java.awt.Font.BOLD, jLabelTitle.getFont().getSize()+3));
         jLabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -109,6 +109,11 @@ public class Main extends javax.swing.JFrame {
 
         jButtonClose.setFont(jButtonClose.getFont());
         jButtonClose.setText("Close");
+        jButtonClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCloseActionPerformed(evt);
+            }
+        });
 
         jButtonAbout.setFont(jButtonAbout.getFont());
         jButtonAbout.setText("About");
@@ -125,17 +130,17 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelSearchTerms)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldSearchTerms, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldSearchTerms)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonSearch))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 90, Short.MAX_VALUE)
                         .addComponent(jRadioButtonAll)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonAny)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonExact)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 91, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonMaintenance)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -171,6 +176,10 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButtonCloseActionPerformed
 
     /**
      * @param args the command line arguments
