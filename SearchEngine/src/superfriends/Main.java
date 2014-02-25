@@ -54,16 +54,22 @@ public class Main extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Superfriends Search Engine");
+        setBackground(java.awt.SystemColor.window);
 
         jLabelTitle.setFont(jLabelTitle.getFont().deriveFont(jLabelTitle.getFont().getStyle() | java.awt.Font.BOLD, jLabelTitle.getFont().getSize()+3));
         jLabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitle.setText("Superfriends Search Engine");
 
         jLabelSearchTerms.setFont(jLabelSearchTerms.getFont().deriveFont(jLabelSearchTerms.getFont().getStyle() | java.awt.Font.BOLD));
-        jLabelSearchTerms.setText("Search Terms");
+        jLabelSearchTerms.setText("Search Terms:");
 
-        jButtonSearch.setFont(jButtonSearch.getFont().deriveFont(jButtonSearch.getFont().getStyle() | java.awt.Font.BOLD));
+        jButtonSearch.setFont(jButtonSearch.getFont());
         jButtonSearch.setText("Search");
+        jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSearchActionPerformed(evt);
+            }
+        });
 
         jTextFieldSearchTerms.setFont(jTextFieldSearchTerms.getFont());
 
@@ -85,6 +91,7 @@ public class Main extends JFrame {
         jTextAreaResults.setFont(jTextAreaResults.getFont());
         jTextAreaResults.setRows(5);
         jTextAreaResults.setText("C:\\SearchResults\\WillAppear\\RightHere.txt");
+        jTextAreaResults.setFocusable(false);
         jScrollPaneResults.setViewportView(jTextAreaResults);
 
         javax.swing.GroupLayout jPanelResultsLayout = new javax.swing.GroupLayout(jPanelResults);
@@ -100,7 +107,7 @@ public class Main extends JFrame {
             jPanelResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelResultsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPaneResults, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addComponent(jScrollPaneResults, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -122,6 +129,11 @@ public class Main extends JFrame {
 
         jButtonAbout.setFont(jButtonAbout.getFont());
         jButtonAbout.setText("About");
+        jButtonAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAboutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,7 +142,7 @@ public class Main extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
                     .addComponent(jPanelResults, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelSearchTerms)
@@ -139,13 +151,13 @@ public class Main extends JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonSearch))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 90, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jRadioButtonAll)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonAny)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonExact)
-                        .addGap(0, 91, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonMaintenance)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -161,15 +173,15 @@ public class Main extends JFrame {
                 .addComponent(jLabelTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSearch)
                     .addComponent(jLabelSearchTerms)
-                    .addComponent(jTextFieldSearchTerms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldSearchTerms)
+                    .addComponent(jButtonSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButtonAny)
                     .addComponent(jRadioButtonExact)
                     .addComponent(jRadioButtonAll))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelResults, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -180,6 +192,7 @@ public class Main extends JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
@@ -192,6 +205,14 @@ public class Main extends JFrame {
         new Maintenance().setVisible(true);
     }//GEN-LAST:event_jButtonMaintenanceActionPerformed
 
+    private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
+        JOptionPane.showMessageDialog(null, "Search button was pressed.");
+    }//GEN-LAST:event_jButtonSearchActionPerformed
+
+    private void jButtonAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAboutActionPerformed
+        JOptionPane.showMessageDialog(null, "Some Superfriends made this.");
+    }//GEN-LAST:event_jButtonAboutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -200,7 +221,8 @@ public class Main extends JFrame {
         // Applies the native system's look-and-feel to the UI
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (   ClassNotFoundException | 
+        } 
+        catch (   ClassNotFoundException | 
                     InstantiationException | 
                     IllegalAccessException | 
                     UnsupportedLookAndFeelException ex) {
