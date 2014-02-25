@@ -25,13 +25,13 @@ import java.awt.event.*;
 public class Maintenance extends JFrame implements ActionListener{
  
 	/* Initialize the Maintenance window components and their properties. */
-	private static void addComponentsToPane(Container pane) {
+	private static void initialize(Container pane) {
  
 	    pane.setLayout(new GridBagLayout());
 	    GridBagConstraints c = new GridBagConstraints();
 	    
 	    JLabel header = new JLabel("Search Engine - Index Maintenance");
-		    header.setFont(new Font("Serif", Font.BOLD, 24));
+		    header.setFont(new Font("Serif", Font.BOLD, 16));
 		    c.insets = new Insets(0, 15, 0, 15);
 		    c.gridwidth = 3;
 		    c.gridx = 0;
@@ -119,30 +119,19 @@ public class Maintenance extends JFrame implements ActionListener{
 		    c.gridx = 2;
 		    c.gridy = 3;
 		    pane.add(labelVersionNumber, c);    
-    }
- 
-    /* Create and show Maintenance window. */
-    private static void createAndShowGUI() {
-        
-        JFrame frame = new JFrame("Search Engine Maintenance");
-        
-        addComponentsToPane(frame.getContentPane());
- 
-        frame.pack();
-        frame.setSize(600,570);
-        frame.setResizable(true);
-        frame.setVisible(true);
-
-    }
+	}
     
     /* Initialize and run the Search Engine Maintenance window. */
-    public static void initialize() {
-        
+    public Maintenance() {
     	javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+            	initialize(getContentPane());
+            	setTitle("Search Engine Maintenance");
+            	setSize(600,570);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                setResizable(true);
             }
-        });
+        });	
     }
 
 	@Override /* Event handling for Maintenance window components. */
@@ -151,21 +140,19 @@ public class Maintenance extends JFrame implements ActionListener{
 		String name = e.getActionCommand();
 		
 		if(name.equals("Add File...")){
-			System.out.println("Add File button has been clicked."); 
+			//System.out.println("Add File button has been clicked."); 
 		}
 		
 		else if(name.equals("Rebuild Out-of-date")) {
-			System.out.println("Rebuild button has been clicked."); 
+			//System.out.println("Rebuild button has been clicked."); 
 		}
 		
 		else if(name.equals("Remove Selected Files")) {
-			System.out.println("Remove File button has been clicked."); 
+			//System.out.println("Remove File button has been clicked."); 
 		}
 		
 		else if(name.equals("Reset Windows")) {
-			System.out.println("Reset Windows has been clicked."); 
+			//System.out.println("Reset Windows has been clicked."); 
 		}
-
 	}
-
 }
