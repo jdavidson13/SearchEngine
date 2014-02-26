@@ -2,7 +2,7 @@
  * Project:         Java II (COP 2805) Search Engine
  * Team:            Super Friends
  * Authors:         Jon Davidson
- *                  Thanh J. Duong A.K.A. Chino Caliente
+ *                  Thanh J. Duong
  *                  John McLain
  *                  Shaz Hosein        
  *
@@ -17,7 +17,7 @@ import java.awt.event.*;
 
 /**
  * @author Jon Davidson
- * @author Chino Caliente
+ * @author Thanh J. Duong
  * @author John McLain
  * @author Shaz Hosein
  */
