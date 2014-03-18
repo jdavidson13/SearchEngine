@@ -12,8 +12,15 @@
 package superfriends;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.Scanner;
 
 /**
  * @author Jon Davidson
@@ -24,8 +31,12 @@ import java.awt.event.*;
 
 public class Maintenance extends JFrame implements ActionListener{
  
+	private JLabel labelFilesIndexed = new JLabel();
+	private DefaultTableModel model = new DefaultTableModel();
+	private JTable tableFileList = new JTable(model);
+
 	/* Initialize the Maintenance window components and their properties. */
-	private static void initialize(Container pane) {
+	public void initialize(Container pane) {
  
 	    pane.setLayout(new GridBagLayout());
 	    GridBagConstraints c = new GridBagConstraints();
@@ -39,10 +50,9 @@ public class Maintenance extends JFrame implements ActionListener{
 		    c.weightx = 1;
 		    c.weighty = 1;
 		    pane.add(header, c);
-	    
-	    String[] columnNames = {"File Name", "Status"};
-	    Object[][] data = {};
-	    JTable tableFileList = new JTable(data, columnNames);
+		    
+			model.addColumn("File Path:");
+			model.addColumn("Last Modified:");   
 		    tableFileList.setFillsViewportHeight(true);
 		    JScrollPane scrollPane = new JScrollPane(tableFileList);
 		    c.fill = GridBagConstraints.BOTH;
@@ -61,7 +71,7 @@ public class Maintenance extends JFrame implements ActionListener{
 		    c.gridy = 2;
 		    pane.add(buttonAddFile, c);
 		    buttonAddFile.setMnemonic(KeyEvent.VK_A);
-		    buttonAddFile.addActionListener(null);
+		    buttonAddFile.addActionListener(this);
 	 
 	    JButton buttonRebuild = new JButton("Rebuild Out-of-date");
 	    	c.fill = GridBagConstraints.NONE;
@@ -72,7 +82,7 @@ public class Maintenance extends JFrame implements ActionListener{
 		    c.gridy = 2;
 		    pane.add(buttonRebuild, c);
 		    buttonRebuild.setMnemonic(KeyEvent.VK_O);
-		    buttonRebuild.addActionListener(null);
+		    buttonRebuild.addActionListener(this);
 	 
 	    JButton buttonRemoveFile = new JButton("Remove Selected Files");
 	    	c.fill = GridBagConstraints.NONE;
@@ -83,7 +93,7 @@ public class Maintenance extends JFrame implements ActionListener{
 		    c.gridy = 2;
 		    pane.add(buttonRemoveFile, c);
 		    buttonRemoveFile.setMnemonic(KeyEvent.VK_R);
-		    buttonRemoveFile.addActionListener(null);
+		    buttonRemoveFile.addActionListener(this);
 	
 	    JButton buttonResetWindows = new JButton("Reset Windows");
 	    	c.fill = GridBagConstraints.NONE;
@@ -94,10 +104,10 @@ public class Maintenance extends JFrame implements ActionListener{
 		    c.gridy = 3;
 		    pane.add(buttonResetWindows, c);
 		    buttonResetWindows.setMnemonic(KeyEvent.VK_W);
-		    buttonResetWindows.addActionListener(null);
+		    buttonResetWindows.addActionListener(this);
 	    
 	    int filesIndexed = 0; // Placeholder for getFilesIndexed method.
-	    JLabel labelFilesIndexed = new JLabel();
+	    	//JLabel labelFilesIndexed = new JLabel();
 		    labelFilesIndexed.setText("Number of files indexed: "
 		    						  + filesIndexed);
 		    c.fill = GridBagConstraints.NONE;
@@ -118,7 +128,10 @@ public class Maintenance extends JFrame implements ActionListener{
 		    c.gridwidth = 1;
 		    c.gridx = 2;
 		    c.gridy = 3;
-		    pane.add(labelVersionNumber, c);    
+		    pane.add(labelVersionNumber, c);
+		    
+		updateFileTable();
+		updateFileCount();
 	}
     
     /* Initialize and run the Search Engine Maintenance window. */
@@ -139,20 +152,123 @@ public class Maintenance extends JFrame implements ActionListener{
 		
 		String name = e.getActionCommand();
 		
+		/* Event handling for the 'Add File' button; Prompts the user to select
+		 * a file, then adds the file to the table of files to index. */
 		if(name.equals("Add File...")){
-			//System.out.println("Add File button has been clicked."); 
+			System.out.println("Add File button has been clicked.");
+			
+			final JFileChooser file = new JFileChooser();
+    		int response = file.showOpenDialog(rootPane);
+    		
+    		if (response == JFileChooser.APPROVE_OPTION) {
+    			System.out.println("Added file to list.");
+    			File test = new File(file.getSelectedFile().toString());
+
+    			model.addRow(new Object[] { test.getAbsolutePath(),
+    					new Date(test.lastModified())});
+    		}
+    		
+    		else { 
+    			JOptionPane.showMessageDialog(null,
+                        "The open operation was cancelled.");
+    		}
+    		
+    		updateFileCount();
+    		writeFileList();
 		}
 		
+		/* TODO in part 3 of the project. */
 		else if(name.equals("Rebuild Out-of-date")) {
-			//System.out.println("Rebuild button has been clicked."); 
+			System.out.println("Rebuild button has been clicked."); 
 		}
 		
+		/* Event handling for the 'Remove Files' button; Prompts the user to
+		 * confirm deletion of the currently selected table rows and removes
+		 * them from the current file list. */
 		else if(name.equals("Remove Selected Files")) {
-			//System.out.println("Remove File button has been clicked."); 
+			System.out.println("Remove File button has been clicked."); 
+			
+			if (tableFileList.getRowCount() > 0) {
+				int dialogueConfirmRemove = JOptionPane.showConfirmDialog(null,
+						"Are you sure you want to delete the currently selected"
+								+ " files?", "", 0, 3);
+				
+				if (dialogueConfirmRemove == 0) {
+					int[] rows = tableFileList.getSelectedRows();
+					for (int i = rows.length - 1; i >= 0; i--) {
+						model.removeRow(rows[i]);
+					}
+					updateFileCount();
+					writeFileList();
+				}
+			}
+
+			else {
+				JOptionPane.showMessageDialog(null,
+                    "There are currently no files to remove.");
+			}
 		}
 		
+		
+		/* TODO: resets main and maintenance windows to their default values.*/
 		else if(name.equals("Reset Windows")) {
-			//System.out.println("Reset Windows has been clicked."); 
+			System.out.println("Reset Windows has been clicked."); 
+		}
+	}
+	
+	/* A simple method to update the current number of files being indexed. */
+	private void updateFileCount() {
+		labelFilesIndexed.setText("Number of files indexed: "
+				  + tableFileList.getRowCount());
+	}
+	
+	/* Writes the current table of indexed files to disk to preserve the file
+	 * list between sessions. */
+	private void writeFileList() {
+		
+		System.out.println("Attempting to write file list to disk...");
+		
+		for (int i = 0; i < tableFileList.getRowCount(); i++) {
+			System.out.println(tableFileList.getValueAt(i, 0) + ","
+				+ tableFileList.getValueAt(i, 1));
+		}
+		try {
+			PrintWriter outputStream = new PrintWriter("filelist.txt", "UTF-8");
+			for (int i = 0; i < tableFileList.getRowCount(); i++) {
+				outputStream.println(tableFileList.getValueAt(i, 0) + ","
+					+ tableFileList.getValueAt(i, 1));
+			}
+			outputStream.close();
+			System.out.println("Write operation successful.");
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+                    "An error occured when attempting to write the file list"
+                    + "contents to disk: the specified file was not found.");
+			System.out.println("Write operation failed!");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+                    "An error occured when attempting to write the file list"
+                    + "contents to disk: UTF-8 encoding not supported.");
+			System.out.println("Write operation failed!");
+		}
+	}
+	
+	private void updateFileTable() {
+		
+		try {
+			File file = new File("filelist.txt");
+			Scanner getFileParams = new Scanner(file);
+			while (getFileParams.hasNextLine() == true) {
+				String buffer = getFileParams.nextLine();
+				String[] ar = buffer.split(",");
+				model.addRow(new Object[] { ar[0], ar[1] });
+			}
+
+		} catch (FileNotFoundException e) {
+			//e.printStackTrace();
 		}
 	}
 }
