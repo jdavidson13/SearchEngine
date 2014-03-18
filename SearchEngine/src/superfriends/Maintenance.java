@@ -190,7 +190,7 @@ public class Maintenance extends JFrame implements ActionListener{
 			
 			if (tableFileList.getRowCount() > 0) {
 				int dialogueConfirmRemove = JOptionPane.showConfirmDialog(null,
-						"Are you sure you want to delete the currently selected"
+						"Are you sure you want to remove the currently selected"
 								+ " files?", "", 0, 3);
 				
 				if (dialogueConfirmRemove == 0) {
