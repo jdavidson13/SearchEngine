@@ -51,9 +51,18 @@ public class Maintenance extends JFrame implements ActionListener{
 		    c.weighty = 1;
 		    pane.add(header, c);
 		    
-			model.addColumn("File Path:");
-			model.addColumn("Last Modified:");   
+		    model.addColumn("#");
+		    model.addColumn("File Path");
+		    model.addColumn("Last Modified");
 		    tableFileList.setFillsViewportHeight(true);
+		    tableFileList.getColumn("#").setMinWidth(25);
+		    tableFileList.getColumn("#").setMaxWidth(60);
+		    tableFileList.getColumn("#").setPreferredWidth(25);
+		    tableFileList.getColumn("File Path").setMinWidth(25);
+		    tableFileList.getColumn("File Path").setPreferredWidth(190);
+		    tableFileList.getColumn("Last Modified").setMinWidth(25);
+		    tableFileList.getColumn("Last Modified").setMaxWidth(200);
+		    tableFileList.getColumn("Last Modified").setPreferredWidth(160);
 		    JScrollPane scrollPane = new JScrollPane(tableFileList);
 		    c.fill = GridBagConstraints.BOTH;
 		    c.insets = new Insets(0, 15, 0, 15);
@@ -106,8 +115,7 @@ public class Maintenance extends JFrame implements ActionListener{
 		    buttonResetWindows.setMnemonic(KeyEvent.VK_W);
 		    buttonResetWindows.addActionListener(this);
 	    
-	    int filesIndexed = 0; // Placeholder for getFilesIndexed method.
-	    	//JLabel labelFilesIndexed = new JLabel();
+	    int filesIndexed = 0;
 		    labelFilesIndexed.setText("Number of files indexed: "
 		    						  + filesIndexed);
 		    c.fill = GridBagConstraints.NONE;
@@ -118,7 +126,7 @@ public class Maintenance extends JFrame implements ActionListener{
 		    c.gridy = 3;
 		    pane.add(labelFilesIndexed, c);
 	    
-	    double versionNumber = 1.0; // Placeholder for getVersionNumber method.
+	    double versionNumber = 1.0;
 	    JLabel labelVersionNumber = new JLabel();
 		    labelVersionNumber.setText("Search Engine version: "
 		    			               + versionNumber);
@@ -140,7 +148,7 @@ public class Maintenance extends JFrame implements ActionListener{
             public void run() {
             	initialize(getContentPane());
             	setTitle("Search Engine Maintenance");
-            	setSize(600,570);
+            	setSize(500,554);
                 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 setResizable(true);
                 setLocationRelativeTo(null);
@@ -165,7 +173,8 @@ public class Maintenance extends JFrame implements ActionListener{
     			System.out.println("Added file to list.");
     			File test = new File(file.getSelectedFile().toString());
 
-    			model.addRow(new Object[] { test.getAbsolutePath(),
+    			model.addRow(new Object[] { model.getRowCount(),
+    					test.getAbsolutePath(),
     					new Date(test.lastModified())});
     		}
     		
@@ -240,14 +249,16 @@ public class Maintenance extends JFrame implements ActionListener{
 		System.out.println("Attempting to write file list to disk...");
 		
 		for (int i = 0; i < tableFileList.getRowCount(); i++) {
-			System.out.println(tableFileList.getValueAt(i, 0) + "\t"
-				+ tableFileList.getValueAt(i, 1));
+			System.out.println(tableFileList.getValueAt(i, 0) + ","
+				+ tableFileList.getValueAt(i, 1) + ","
+				+ tableFileList.getValueAt(i, 2));
 		}
 		try {
 			PrintWriter outputStream = new PrintWriter("filelist.txt", "UTF-8");
 			for (int i = 0; i < tableFileList.getRowCount(); i++) {
-				outputStream.println(tableFileList.getValueAt(i, 0) + "\t"
-					+ tableFileList.getValueAt(i, 1));
+				outputStream.println(tableFileList.getValueAt(i, 0) + ","
+					+ tableFileList.getValueAt(i, 1) + ","
+					+ tableFileList.getValueAt(i, 2));
 			}
 			outputStream.close();
 			System.out.println("Write operation successful.");
@@ -276,8 +287,8 @@ public class Maintenance extends JFrame implements ActionListener{
 			Scanner getFileParams = new Scanner(file);
 			while (getFileParams.hasNextLine() == true) {
 				String buffer = getFileParams.nextLine();
-				String[] ar = buffer.split("\t");
-				model.addRow(new Object[] { ar[0], ar[1] });
+				String[] ar = buffer.split(",");
+				model.addRow(new Object[] { ar[0], ar[1], ar[2] });
 			}
 
 		} catch (FileNotFoundException e) {
