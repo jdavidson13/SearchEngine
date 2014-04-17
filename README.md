@@ -1,7 +1,8 @@
 SearchEngine
 ============
 
-Search engine project for Wayne Pollock's Spring 2014 Java II class.
+Search engine project for Prof. Wayne Pollock's COP 2805-51052
+Spring 2014 Java II class.
 
 Project Roadmap:
 ------------
