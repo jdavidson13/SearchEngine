@@ -216,8 +216,8 @@ public class Main extends JFrame {
     /* Simple utility method which accepts a string value, removes all non-alphanumeric
      * characters, converts them to lowercase, and then returns the modified string. */
 	private static String normalize(String s) {
-		s = s.replaceAll("[\\d[^\\w\\s]]+", " ").replaceAll("(\\s{2,})", " ");
-    	s = s.toLowerCase();
+		s = s.replaceAll("[\\d[^\\w\\s]]+", "").replaceAll("(\\s{2,})", " ");
+    		s = s.toLowerCase();
 		return s;
 	}
 
