@@ -11,6 +11,7 @@
 
 package superfriends;
 
+import java.util.*;
 import javax.swing.*;
 
 /**
@@ -93,14 +94,17 @@ public class Main extends JFrame {
         buttonGroupSearchTerms.add(jRadioButtonAny);
         jRadioButtonAny.setFont(jRadioButtonAny.getFont());
         jRadioButtonAny.setText("Any of the Terms");
+        jRadioButtonAny.setEnabled(false);
 
         buttonGroupSearchTerms.add(jRadioButtonExact);
         jRadioButtonExact.setFont(jRadioButtonExact.getFont());
         jRadioButtonExact.setText("Exact Phrase");
+        jRadioButtonExact.setEnabled(false);
 
         buttonGroupSearchTerms.add(jRadioButtonAll);
         jRadioButtonAll.setFont(jRadioButtonAll.getFont());
         jRadioButtonAll.setText("All of the Terms");
+        jRadioButtonAll.setEnabled(false);
 
         jPanelResults.setBorder(javax.swing.BorderFactory.createTitledBorder("Matching Results"));
 
@@ -209,8 +213,6 @@ public class Main extends JFrame {
                 .addContainerGap())
         );
 
-        jButtonMaintenance.getAccessibleContext().setAccessibleName("Maintenance");
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -225,8 +227,24 @@ public class Main extends JFrame {
         new Maintenance().setVisible(true);
     }//GEN-LAST:event_jButtonMaintenanceActionPerformed
 
+    /*
+    What happens when you actually press the Search button!
+    */
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
-        JOptionPane.showMessageDialog(null, "Search button was pressed.");
+        
+        String search = jTextFieldSearchTerms.getText();
+        
+        List<String> results = Search.Query( search );
+        Iterator<String> iterator = results.iterator();
+        
+        StringBuilder sb = new StringBuilder();
+        
+        while ( iterator.hasNext() ) {
+            sb.append( iterator.next() );
+            sb.append( "\n" );
+        }
+        
+        jTextAreaResults.setText( sb.toString() );
     }//GEN-LAST:event_jButtonSearchActionPerformed
 
     private void jButtonAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAboutActionPerformed

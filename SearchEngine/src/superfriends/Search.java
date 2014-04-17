@@ -15,6 +15,8 @@ import java.io.*;
 import java.util.*;
 import javax.swing.JOptionPane;
 
+import static superfriends.Normalize.normalize;
+
 /**
  * @author Jon Davidson
  * @author Chino Caliente
@@ -23,51 +25,83 @@ import javax.swing.JOptionPane;
  */
 public class Search {
     
-    public static void main( String args[] ) {
+    /*
+    Main entry point from Main class
+    */
+    public static List Query ( String s ) {
+        Map<String,List<Integer>> map = readIndex();
+        Map<Integer,String> files = readFiles();
         
-        // Creates a map, with a String key and a location pair
-        // populated from readIndex(), see class Loc for location pair format
-        Map<String, List<Location>> map = readIndex();
-    }   
+        List<String> results = new ArrayList();
+        Set<Integer> set = new TreeSet();
+        
+        // normalizes the text to all lowercase, no special characters
+        s = normalize( s );
+        
+        // adds each search term to a list, where they can be managed individually
+        StringTokenizer st = new StringTokenizer( s, " " );
+        
+        // checks for presence of each word
+        while ( st.hasMoreTokens() ) {
+            String word = st.nextToken();
+            
+            // pulls the list of files containing each word
+            if ( map.containsKey(word) ) {
+                List<Integer> list = map.get(word);
+                System.out.println( list.toString() + list.size() );
+                StringTokenizer st2 = new StringTokenizer( list.toString(), "[,] " );
+                while ( st2.hasMoreTokens() ) {
+                    set.add( Integer.parseInt( st2.nextToken() ) );
+                }
+            }
+        }
+                
+        // makes a list of file paths, based on their index keys
+        Iterator<Integer> iterator = set.iterator();
+        while ( iterator.hasNext() ) {
+            results.add( files.get( iterator.next() ) );
+        }
+        
+        return results;
+    }
     
     /*
     Reads the index file, and parses its contents into a Map
     */
     private static Map readIndex() {
         
-        // creates a hashmap of type String(key), List(of Int pairs) to hold the index
-        Map<String, List<Location>> map = new HashMap<>();
+        // this will hold the index
+        Map<String,List<Integer>> map = new TreeMap();
         
         try {
-            // attempts to created a BufferedReader attached to index.txt
-            BufferedReader br = new BufferedReader ( new FileReader ( "index.txt" ) );
             
-            // grabs the first full line (i.e. 1 entry) from the index
+            BufferedReader br = new BufferedReader ( new FileReader ( "index.txt" ) );
             String line = br.readLine();
 
             while( line != null ){
-                // index.txt is tab delimited, hence the \t tokenizer
+                
                 StringTokenizer st = new StringTokenizer( line, "\t" );
-                // the first thing on the line is the actual word we've indexed
+                
+                // the first thing on each line is our key word (searchable term)
                 String word = st.nextToken();
 
-                // each subsequent word is an integer location pair
+                // each subsequent word is an integer location pair which
+                // we're making into a List<Location>
                 List list = new ArrayList();
                 while ( st.hasMoreTokens() ) {
                     String pair = st.nextToken();
                     StringTokenizer st2 = new StringTokenizer ( pair, "," );
                     int x = Integer.parseInt( st2.nextToken() );
-                    int y = Integer.parseInt( st2.nextToken() );
-                    Location loc = new Location( x, y );
-                    list.add(loc);
+                    // int y = Integer.parseInt( st2.nextToken() );
+                    // Location loc = new Location( x, y );
+                    list.add(x); //list.add(loc);
                 }
 
-                // adds the full map entry to our collection
-                map.put(word, list);
-                
-                // and moves on to the next line
-                line = br.readLine();
+                map.put(word, list);    // adds the full map entry to our collection
+                line = br.readLine();   // and moves on to the next one...
             }
+            
+            return map;
         } 
         catch (IOException ex) {
             JOptionPane.showMessageDialog(null,
@@ -76,7 +110,41 @@ public class Search {
             System.out.println("Failed to read index.\n" + ex );
         }
         
-        return map;
+        return null;
+    }
+    
+    /*
+    Reads filelist.txt and grabs the first two fields, index number and file path
+    */
+    private static Map readFiles() {
+        
+        Map<Integer,String> map = new TreeMap();
+        
+        try {
+            BufferedReader br = new BufferedReader ( new FileReader ( "filelist.txt" ) );
+            String line = br.readLine();
+            
+            while( line != null ){
+                
+                StringTokenizer st = new StringTokenizer( line, "," );
+                
+                int id = Integer.parseInt( st.nextToken() );
+                String path = st.nextToken();
+                map.put( id, path );
+
+                line = br.readLine();
+            }
+            
+            return map;
+        }
+        catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,
+                "An error occured when attempting to read the index. " +
+                "Please rebuild the index by selecting Maintenance.");
+            System.out.println("Failed to read index.\n" + ex );
+        }
+        
+        return null;
     }
 }
 

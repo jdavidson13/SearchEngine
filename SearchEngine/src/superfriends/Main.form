@@ -151,6 +151,7 @@
           </FontInfo>
         </Property>
         <Property name="text" type="java.lang.String" value="Any of the Terms"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="jRadioButtonExact">
@@ -164,6 +165,7 @@
           </FontInfo>
         </Property>
         <Property name="text" type="java.lang.String" value="Exact Phrase"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="jRadioButtonAll">
@@ -177,6 +179,7 @@
           </FontInfo>
         </Property>
         <Property name="text" type="java.lang.String" value="All of the Terms"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanelResults">
@@ -242,9 +245,6 @@
         </Property>
         <Property name="label" type="java.lang.String" value="Maintenance"/>
       </Properties>
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Maintenance"/>
-      </AccessibilityProperties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonMaintenanceActionPerformed"/>
       </Events>
