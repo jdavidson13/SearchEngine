@@ -19,7 +19,24 @@ import javax.swing.*;
  * @author John McLain
  * @author Shaz Hosein
  */
+
 public class Main extends JFrame {
+    public static void main(String args[]) {
+        
+        // applies the native system's look-and-feel to the UI
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } 
+        catch (     ClassNotFoundException | 
+                    InstantiationException | 
+                    IllegalAccessException | 
+                    UnsupportedLookAndFeelException ex) {
+            System.out.println("Unable to load native look and feel");
+        }
+        
+        // instantiates and shows the main JFrame
+        new Main().setVisible(true);
+    }
 
     /**
      * Creates new form NewJFrame
@@ -112,7 +129,7 @@ public class Main extends JFrame {
         );
 
         jButtonMaintenance.setFont(jButtonMaintenance.getFont());
-        jButtonMaintenance.setText("Choose Files to Search");
+        jButtonMaintenance.setLabel("Maintenance");
         jButtonMaintenance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonMaintenanceActionPerformed(evt);
@@ -172,10 +189,11 @@ public class Main extends JFrame {
                 .addContainerGap()
                 .addComponent(jLabelTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelSearchTerms)
-                    .addComponent(jTextFieldSearchTerms)
-                    .addComponent(jButtonSearch))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldSearchTerms, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelSearchTerms)
+                        .addComponent(jButtonSearch)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButtonAny)
@@ -190,6 +208,8 @@ public class Main extends JFrame {
                     .addComponent(jButtonAbout))
                 .addContainerGap())
         );
+
+        jButtonMaintenance.getAccessibleContext().setAccessibleName("Maintenance");
 
         pack();
         setLocationRelativeTo(null);
@@ -213,33 +233,9 @@ public class Main extends JFrame {
         JOptionPane.showMessageDialog(null, "Some Superfriends made this.");
     }//GEN-LAST:event_jButtonAboutActionPerformed
 
-    /* Simple utility method which accepts a string value, removes all non-alphanumeric
-     * characters, converts them to lowercase, and then returns the modified string. */
-	private static String normalize(String s) {
-		s = s.replaceAll("[\\d[^\\w\\s]]+", "").replaceAll("(\\s{2,})", " ");
-    		s = s.toLowerCase();
-		return s;
-	}
-
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        
-        // Applies the native system's look-and-feel to the UI
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } 
-        catch (   ClassNotFoundException | 
-                    InstantiationException | 
-                    IllegalAccessException | 
-                    UnsupportedLookAndFeelException ex) {
-            System.out.println("Unable to load native look and feel");
-        }
-        
-        // Instantiates and shows the main JFrame
-        new Main().setVisible(true);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupSearchTerms;
