@@ -143,6 +143,7 @@ public class Maintenance extends JFrame implements ActionListener{
             	setSize(600,570);
                 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 setResizable(true);
+                setLocationRelativeTo(null);
             }
         });	
     }
@@ -210,13 +211,23 @@ public class Maintenance extends JFrame implements ActionListener{
 		}
 		
 		
-		/* TODO: resets main and maintenance windows to their default values.*/
+		/* Resets the positions and sizes of both the main and maintenance
+		 * windows to their default values. */
 		else if(name.equals("Reset Windows")) {
-			System.out.println("Reset Windows has been clicked."); 
+			System.out.println("Reset Windows has been clicked.");
+			
+			//Reset maintenance window
+			setSize(getPreferredSize());
+			setLocationRelativeTo(null);
+			
+			// Reset main window
+			Frame[] main = Main.getFrames();
+			main[0].setSize(main[0].getPreferredSize());;
+			main[0].setLocationRelativeTo(null);
 		}
 	}
 	
-	/* A simple method to update the current number of files being indexed. */
+	/* Updates the counter for the current number of files being indexed. */
 	private void updateFileCount() {
 		labelFilesIndexed.setText("Number of files indexed: "
 				  + tableFileList.getRowCount());
@@ -229,13 +240,13 @@ public class Maintenance extends JFrame implements ActionListener{
 		System.out.println("Attempting to write file list to disk...");
 		
 		for (int i = 0; i < tableFileList.getRowCount(); i++) {
-			System.out.println(tableFileList.getValueAt(i, 0) + ","
+			System.out.println(tableFileList.getValueAt(i, 0) + "\t"
 				+ tableFileList.getValueAt(i, 1));
 		}
 		try {
 			PrintWriter outputStream = new PrintWriter("filelist.txt", "UTF-8");
 			for (int i = 0; i < tableFileList.getRowCount(); i++) {
-				outputStream.println(tableFileList.getValueAt(i, 0) + ","
+				outputStream.println(tableFileList.getValueAt(i, 0) + "\t"
 					+ tableFileList.getValueAt(i, 1));
 			}
 			outputStream.close();
@@ -256,6 +267,8 @@ public class Maintenance extends JFrame implements ActionListener{
 		}
 	}
 	
+	/* Reads and populates the list of files in the maintenance window
+     * from the file index. */
 	private void updateFileTable() {
 		
 		try {
@@ -263,7 +276,7 @@ public class Maintenance extends JFrame implements ActionListener{
 			Scanner getFileParams = new Scanner(file);
 			while (getFileParams.hasNextLine() == true) {
 				String buffer = getFileParams.nextLine();
-				String[] ar = buffer.split(",");
+				String[] ar = buffer.split("\t");
 				model.addRow(new Object[] { ar[0], ar[1] });
 			}
 
