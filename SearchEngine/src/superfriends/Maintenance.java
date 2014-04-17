@@ -13,14 +13,18 @@ package superfriends;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  * @author Jon Davidson
@@ -82,7 +86,7 @@ public class Maintenance extends JFrame implements ActionListener{
 		    buttonAddFile.setMnemonic(KeyEvent.VK_A);
 		    buttonAddFile.addActionListener(this);
 	 
-	    JButton buttonRebuild = new JButton("Rebuild Out-of-date");
+	    JButton buttonRebuild = new JButton("Rebuild Index");
 	    	c.fill = GridBagConstraints.NONE;
 	    	c.anchor = GridBagConstraints.CENTER;
 	    	c.insets = new Insets(5, 0, 5, 0);
@@ -187,9 +191,47 @@ public class Maintenance extends JFrame implements ActionListener{
     		writeFileList();
 		}
 		
-		/* TODO in part 3 of the project. */
-		else if(name.equals("Rebuild Out-of-date")) {
-			System.out.println("Rebuild button has been clicked."); 
+		/* Event handling for the 'Rebuild Index' button; attempts to compile
+		 * a new index based on the selected files, and writes the generated
+		 * key map and associated positional pairings to the index.txt file. */
+		else if(name.equals("Rebuild Index")) {
+			System.out.println("Building a new index... ");
+			try {
+				
+				TreeMap<String,List<String>> map = buildIndex(getFileList());
+				System.out.println("Build complete.\n\n" + map);
+				
+				List test = new ArrayList();
+				test.add(map.get("the"));
+				
+				PrintWriter outputStream;
+				outputStream = new PrintWriter("index.txt", "UTF-8");
+
+				/* Print each key and its corresponding location pair to the
+				 * index file, formatted as a set of tab-delimited values. */
+				for (String key : map.keySet()) {
+					
+					List ar = new ArrayList();
+					ar.add(map.get(key));
+					String text = ar.toString().replace("[", "")
+							.replace("]", "").replace(", ", "\t");
+					outputStream.println(key + "\t" + text);
+				}
+				outputStream.close();
+				System.out.println("Write operation successful.");
+				
+			} catch (FileNotFoundException e1) {
+				JOptionPane.showMessageDialog(null,
+	                    "An error occured when attempting to build the index: "
+	                    + "one or more of the selected text files were not "
+	                    + "found.");
+				e1.printStackTrace();
+			} catch (UnsupportedEncodingException e1) {
+				JOptionPane.showMessageDialog(null,
+	                    "An error occured when attempting to write the index"
+	                    + "contents to disk: UTF-8 encoding not supported.");
+				e1.printStackTrace();
+			}
 		}
 		
 		/* Event handling for the 'Remove Files' button; Prompts the user to
@@ -276,6 +318,88 @@ public class Maintenance extends JFrame implements ActionListener{
                     + "contents to disk: UTF-8 encoding not supported.");
 			System.out.println("Write operation failed!");
 		}
+	}
+	
+	/* Builds an index of key words from the list of documents. Parses and 
+	 * reads through each document word by word, compiling a map of each
+	 * occurrence and its position, and returning the final index as a map. */
+	public static TreeMap<String,List<String>> buildIndex(List<String> files)
+			throws FileNotFoundException {
+		TreeMap<String,List<String>> map = new TreeMap();
+		
+		// For each file in the list:
+		for (int i = 0; i < files.size(); i++) {
+			String path = files.get(i);
+			
+			int position = 0; // Set positioning cursor to 0
+			
+			System.out.println("Step: " + i + ", Reading file: " + path + "\n");
+		
+			// Parse each word of the file and check if it exists on the map.
+			File f = new File(path);
+			Scanner s = new Scanner(f);
+						
+			while (s.hasNext() == true) {			
+				String word = Normalize.normalize(s.next());
+				String loc = i + "," + position;
+				System.out.println(word + ": " + loc);
+				
+				/* If the map doesn't contain the key word, add a new key word
+				 * and associated pairing to the map.  */
+				if (map.containsKey(word) == false) {
+					List ar = new ArrayList();
+					ar.add(loc);
+					map.put(word, ar);
+				}
+				
+				/* If the map already contains the key word, copy the existing
+				 * array of locations and add the new location to the list,
+				 * then overwrite the existing key entry. */
+				else {
+					List ar = new ArrayList();
+					ar = map.get(word);
+					ar.add(loc);
+					map.put(word,  ar);
+				}	
+				
+				position++; // Scan next word
+				
+			}
+			System.out.println("\nDone. Closing file.");
+			s.close();
+		}
+		return map; /* Return the index as a map. */
+	}
+
+	/* Reads and splits the file paths from the list of files into an array. */
+	private List<String> getFileList() {
+		List ar = new ArrayList();
+		try {
+			
+			File file = new File("filelist.txt");
+			Scanner s = new Scanner(file);
+			
+			while (s.hasNextLine() == true) {
+				String buffer = s.nextLine();
+				String[] stray = buffer.split(",");	
+				ar.add(stray[1]);
+			}
+			
+			s.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return ar;
+	}
+	
+	private String listToString(List<?> l) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < l.size(); i++) {
+			sb.append(l.get(i));
+			if (i != l.size() -1) sb.append("\t");
+		}
+			return sb.toString();
 	}
 	
 	/* Reads and populates the list of files in the maintenance window
