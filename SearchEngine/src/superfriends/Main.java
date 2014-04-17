@@ -213,6 +213,14 @@ public class Main extends JFrame {
         JOptionPane.showMessageDialog(null, "Some Superfriends made this.");
     }//GEN-LAST:event_jButtonAboutActionPerformed
 
+    /* Simple utility method which accepts a string value, removes all non-alphanumeric
+     * characters, converts them to lowercase, and then returns the modified string. */
+	private static String normalize(String s) {
+		s = s.replaceAll("[\\d[^\\w\\s]]+", " ").replaceAll("(\\s{2,})", " ");
+    	s = s.toLowerCase();
+		return s;
+	}
+
     /**
      * @param args the command line arguments
      */
